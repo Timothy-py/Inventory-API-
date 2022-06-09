@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const logger = require('./logger');
 
 require('dotenv').config();
 
@@ -26,11 +27,11 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser:true, useUnifiedTopology:true});
 const connection = mongoose.connection;
 connection.once('open', ()=>{
-    console.log('MongoDB Database connection established successfully');
+    logger.info('MongoDB Database connection established successfully');
 })
 
 app.listen(port, ()=>{
-    console.log(`Server is running on port: ${port}`)
+    logger.info(`Server is running on port: ${port}`)
 })
 
 // export app

@@ -4,7 +4,8 @@
   "description": "An Inventory tracking api for a logistic company",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "mocha": "^10.0.0",
     "mongoose": "^6.3.6",
     "swagger-jsdoc": "^6.2.1",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "winston": "^3.7.2"
   }
 }

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // app route
+const inventory_routes = require('./routes/inventory');
 
 // instantiate express app
 const app = express();
@@ -16,17 +17,17 @@ app.use(cors());
 app.use(express.json());
 
 // app base route
-app.use('/api/v1', routes);
+app.use('/api/v1/inventory', inventory_routes);
 
 
-// setup mongodb connection: connecting to mongo atlas
-const uri = process.env.ATLAS_URI;
+// // setup mongodb connection: connecting to mongo atlas
+// const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, {useNewUrlParser:true, useCreateIndex: true, useUnifiedTopology:true});
-const connection = mongoose.connection;
-connection.once('open', ()=>{
-    console.log('MongoDB Database connection established successfully');
-})
+// mongoose.connect(uri, {useNewUrlParser:true, useCreateIndex: true, useUnifiedTopology:true});
+// const connection = mongoose.connection;
+// connection.once('open', ()=>{
+//     console.log('MongoDB Database connection established successfully');
+// })
 
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`)

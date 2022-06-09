@@ -7,7 +7,7 @@ const logger = require('./logger');
 require('dotenv').config();
 
 // app route
-const inventory_routes = require('./routes/inventory');
+const inventory_routes = require('./routes/inventory.route');
 
 // instantiate express app
 const app = express();

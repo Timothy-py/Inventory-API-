@@ -20,14 +20,14 @@ app.use(express.json());
 app.use('/api/v1/inventory', inventory_routes);
 
 
-// // setup mongodb connection: connecting to mongo atlas
-// const uri = process.env.ATLAS_URI;
+// setup mongodb connection: connecting to mongo atlas
+const uri = process.env.ATLAS_URI;
 
-// mongoose.connect(uri, {useNewUrlParser:true, useCreateIndex: true, useUnifiedTopology:true});
-// const connection = mongoose.connection;
-// connection.once('open', ()=>{
-//     console.log('MongoDB Database connection established successfully');
-// })
+mongoose.connect(uri, {useNewUrlParser:true, useUnifiedTopology:true});
+const connection = mongoose.connection;
+connection.once('open', ()=>{
+    console.log('MongoDB Database connection established successfully');
+})
 
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`)

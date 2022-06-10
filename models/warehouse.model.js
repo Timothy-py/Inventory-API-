@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const warehouse = new Schema({
     name: {
         type: String,
-        require: false
+        require: true
     },
     country: {
         type: String,

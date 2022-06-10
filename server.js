@@ -8,6 +8,7 @@ require('dotenv').config();
 
 // app route
 const inventory_routes = require('./routes/inventory.route');
+const warehouse_routes = require('./routes/warehouse.route')
 
 // instantiate express app
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 
 // app base route
 app.use('/api/v1/inventory', inventory_routes);
+app.use('/api/v1/warehouse', warehouse_routes);
 
 
 // setup mongodb connection: connecting to mongo atlas

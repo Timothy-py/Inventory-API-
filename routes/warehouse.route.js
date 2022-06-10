@@ -1,10 +1,9 @@
 const router = require('express').Router();
 
 // import controllers
+const warehouseController = require('../controllers/warehouse.controller');
 
 // create warehouse
-router.get('', (req, res) => {
-    res.status(200).send('Create warehouse');
-})
+router.post('', warehouseController.createWarehouse);
 
 module.exports = router;

@@ -30,7 +30,11 @@ const inventory = new Schema({
     image: {
         type: String,
         required: [true, 'Include image for your product']
-    }
+    },
+    locations: {
+        type: Array,
+        required: [false]
+    } 
 }, {
     timestamps: true
 })

@@ -24,14 +24,14 @@ const inventory = new Schema({
         required: true
     },
     other_details: {
-        type: String,
+        type: Schema.Types.Mixed,
         required: false
     },
     image: {
         type: String,
-        required: [true, 'Include image for your product']
+        required: false
     },
-    locations: {
+    warehouse: {
         type: Array,
         required: [false]
     } 

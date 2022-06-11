@@ -11,7 +11,9 @@ const s3 = new AWS.S3({
 })
 
 module.exports = (req, res, next) => {
-    const image = req.file.originalname.split(".")
+    // if image file is provided
+    if (req.file){
+        const image = req.file.originalname.split(".")
     const fileType = image[image.length - 1]
 
     const params = {
@@ -30,8 +32,11 @@ module.exports = (req, res, next) => {
         }
 
         const img_url = data['Location']
-        req.image = {url: img_url}
+        req.body = {image: img_url}
 
         next()
     })
+    }else{
+        next()
+    }
 }

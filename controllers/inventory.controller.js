@@ -48,16 +48,24 @@ exports.createInventory = [
 
 // ********************GET INVENTORY******************************
 exports.getInventory = async (req, res) => {
-    const inventory_id = req.params.inventory_id
 
-    const query = await Inventory.findById(inventory_id).exec()
+    try {
+        const inventory_id = req.params.inventory_id
 
-    if(query){
-        return res.status(200).json({
-            message: 'Inventory retrieved successfully',
-            data: query
-        })
-    }else{
+        const query = await Inventory.findById(inventory_id).exec()
+
+        if(query){
+            return res.status(200).json({
+                message: 'Inventory retrieved successfully',
+                data: query
+            })
+        }else{
+            return res.status(404).json({
+                message: 'Item does not exist',
+                data: query
+            })
+        }
+    } catch (error) {
         logger.error(`Unable to retrieve inventory item:-${error.message}`)
         return res.status(500).json({
             message: 'Unable to retrieve inventory item',
@@ -65,3 +73,30 @@ exports.getInventory = async (req, res) => {
         })
     }
 }
+
+
+// ********************GET ALL INVENTORIES******************************
+exports.getAllInventories = async (req, res) => {
+    try {
+        const query = await Inventory.find().exec()
+        return res.status(200).json({
+            message: 'All Inventories retrieved successfully',
+            data: query
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Unable to retrieve Inventories',
+            error: error
+        })
+    }
+}
+
+// // ********************UPDATE INVENTORY******************************
+// exports.updateInventory = async (req, res) => {
+//     const inventory_id = req.params.inventory_id;
+//     const body = req.body
+//     console.log(req.body)
+
+//     // const query = await Inventory.findByIdAndUpdate(inventory_id, )
+//     return res.status(200).send(body)
+// }

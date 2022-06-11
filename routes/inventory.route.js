@@ -9,6 +9,9 @@ const s3_upload = require('../middleware/s3_img_upload');
 
 // index
 router.post('', multer_upload, s3_upload, inventoryController.createInventory);
+// router.put('/:inventory_id', inventoryController.updateInventory);
+router.get('/all', inventoryController.getAllInventories);
 router.get('/:inventory_id', inventoryController.getInventory);
+
 
 module.exports = router;

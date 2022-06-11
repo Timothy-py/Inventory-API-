@@ -2,7 +2,7 @@
 const {Inventory} = require('../models/inventory.model');
 const logger = require('../logger');
 
-// create inventory
+// ********************CREATE INVENTORY******************************
 exports.createInventory = async(req, res) => {
     try {
         const {
@@ -32,6 +32,27 @@ exports.createInventory = async(req, res) => {
         logger.error(`Unable to create inventory:-${error.message}`)
         return res.status(500).json({
             message: "Unable to create Inventory",
+            error: error
+        })
+    }
+}
+
+
+// ********************GET INVENTORY******************************
+exports.getInventory = async (req, res) => {
+    const inventory_id = req.params.inventory_id
+
+    const query = await Inventory.findById(inventory_id).exec()
+
+    if(query){
+        return res.status(200).json({
+            message: 'Inventory retrieved successfully',
+            data: query
+        })
+    }else{
+        logger.error(`Unable to retrieve inventory item:-${error.message}`)
+        return res.status(500).json({
+            message: 'Unable to retrieve inventory item',
             error: error
         })
     }

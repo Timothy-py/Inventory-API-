@@ -30,7 +30,7 @@ exports.createWarehouse = [
                 city: city
             })
     
-            return res.status(200).json({
+            return res.status(201).json({
                 message: 'Warehouse created successfully',
                 data: warehouse
             })

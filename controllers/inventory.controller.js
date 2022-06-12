@@ -189,3 +189,26 @@ exports.updateInventory = async (req, res) => {
         })
     }   
 }
+
+
+// // ********************DELETE AN INVENTORY******************************
+exports.deleteInventory = async (req, res) => {
+    try {
+        const inventory_id = req.params.inventory_id;
+        const query = await Inventory.findByIdAndDelete(inventory_id).exec()
+        if(query){
+            return res.status(204).send('Inventory deleted successfuly')
+        }else{
+            return res.status(404).json({
+                message: 'Item does not exist',
+                data: query
+            })
+        }
+    } catch (error) {
+        logger.error(`Unable to delete inventory item:-${error.message}`)
+        return res.status(500).json({
+            message: 'Unable to delete inventory item',
+            error: error
+        })
+    }
+}

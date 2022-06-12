@@ -11,6 +11,7 @@ router.post('', multer, inventoryController.createInventory);
 router.patch('/:inventory_id', multer, inventoryController.updateInventory);
 router.get('/all', inventoryController.getAllInventories);
 router.get('/:inventory_id', inventoryController.getInventory);
+router.delete('/:inventory_id', inventoryController.deleteInventory);
 
 
 module.exports = router;

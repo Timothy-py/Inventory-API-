@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Timothy-py/Inventory-API-#readme",
   "dependencies": {
     "aws-sdk": "^2.1152.0",
+    "body-parser": "^1.20.0",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",

@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const logger = require('./logger');
 
 require('dotenv').config();
@@ -16,7 +17,12 @@ const port = process.env.PORT;
 
 // use middlewares
 app.use(cors());
-app.use(express.json());
+// app.use(express.json());
+// app.use(express.urlencoded())
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 // app base route
 app.use('/api/v1/inventory', inventory_routes);

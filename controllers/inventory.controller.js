@@ -18,6 +18,7 @@ const s3 = new AWS.S3({
 
 // ********************CREATE INVENTORY******************************
 exports.createInventory = [
+    // validate request body
     inventoryValidator(),
 
     async(req, res) => {
@@ -29,6 +30,7 @@ exports.createInventory = [
             })
         }
 
+        // if request body contains an image: process the image
         if(req.file){
             const img = req.file.originalname.split(".")
             const fileType = img[img.length - 1]
@@ -41,16 +43,19 @@ exports.createInventory = [
 
             var image;
             try {
+                // upload image to aws s3 bucket
                 const data = await s3.upload(params).promise();
+
                 image = data['Location']
-                console.log(image)
               }
               catch (err) {
-                console.log(err);
+                logger.error(`Unable to process image - ${err}`)
+                return res.status(500).json({
+                    message: "Unable to process image",
+                    error: err
+                })
               }
         }
-    
-        console.log(`Outside - ${image}`)
 
         try {
             const {
@@ -58,7 +63,6 @@ exports.createInventory = [
                 price, unit,
                 quantity, other_details
             } = req.body;
-            // const image = data['Location']
     
             // instantiate a new inventory object
             const inventory = new Inventory({

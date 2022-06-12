@@ -138,13 +138,54 @@ exports.getAllInventories = async (req, res) => {
 
 // // ********************UPDATE INVENTORY******************************
 exports.updateInventory = async (req, res) => {
+
+    // if request body contains an image: process the image
+    if(req.file){
+        const img = req.file.originalname.split(".")
+        const fileType = img[img.length - 1]
+        
+        const params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: `${uuid()}.${fileType}`,
+            Body: req.file.buffer
+        }
+
+        // var image;
+        try {
+            // upload image to aws s3 bucket
+            const data = await s3.upload(params).promise();
+
+            // image = data['Location']
+            req.body.image = data['Location']
+          }
+          catch (err) {
+            logger.error(`Unable to process image - ${err}`)
+            return res.status(500).json({
+                message: "Unable to process image",
+                error: err
+            })
+          }
+    }
+
     try {
         const inventory_id = req.params.inventory_id;
-    console.log(req.body)
+        const body = {...req.body}
 
-    // const query = await Inventory.findByIdAndUpdate(inventory_id, )
-    return res.status(200).send("OK")
+        const query = await Inventory.findByIdAndUpdate(inventory_id, body).exec()
+
+        if(query){
+            return res.status(204).send('Updated sucessfully')
+        }else{
+            return res.status(404).json({
+                message: 'Item does not exist',
+                data: query
+            })
+        }
     } catch (error) {
-        return res.status(500).send("ERROR")
-    }
+        logger.error(`Unable to update inventory item:-${error.message}`)
+        return res.status(500).json({
+            message: 'Unable to update inventory item',
+            error: error
+        })
+    }   
 }

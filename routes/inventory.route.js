@@ -4,13 +4,13 @@ const router = require('express').Router();
 const inventoryController = require('../controllers/inventory.controller');
 
 // import middleware
-const multer_upload = require('../middleware/multer_img_upload');
+const multer = require('../middleware/multer_img_upload');
 
 // index
-router.post('', multer_upload, inventoryController.createInventory);
-router.patch('/:inventory_id', inventoryController.updateInventory);
-router.get('/:inventory_id', inventoryController.getInventory);
+router.post('', multer, inventoryController.createInventory);
+router.patch('/:inventory_id', multer, inventoryController.updateInventory);
 router.get('/all', inventoryController.getAllInventories);
+router.get('/:inventory_id', inventoryController.getInventory);
 
 
 module.exports = router;

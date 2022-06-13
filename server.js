@@ -28,6 +28,11 @@ app.use(bodyParser.json())
 app.use('/api/v1/inventory', inventory_routes);
 app.use('/api/v1/warehouse', warehouse_routes);
 
+// base route
+app.get('/', (req, res)=>{
+    res.status(200).send("Inventory App API")
+})
+
 
 // setup mongodb connection: connecting to mongo atlas
 const uri = process.env.ATLAS_URI;

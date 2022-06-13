@@ -99,7 +99,7 @@ exports.getInventory = async (req, res) => {
     try {
         const inventory_id = req.params.inventory_id
 
-        const query = await Inventory.findById(inventory_id).exec()
+        const query = await Inventory.findById(inventory_id).populate('warehouse').exec()
 
         if(query){
             return res.status(200).json({

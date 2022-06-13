@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// import inventory schema
+const {warehouse} = require('./warehouse.model')
+
 // configure inventory schema
 const inventory = new Schema({
     name: {
@@ -31,10 +34,11 @@ const inventory = new Schema({
         type: String,
         required: false
     },
-    warehouse: {
-        type: Array,
-        required: [false]
-    } 
+    warehouse:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Warehouse',
+        required: false 
+    }]
 }, {
     timestamps: true
 })

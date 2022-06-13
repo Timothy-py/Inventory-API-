@@ -5,6 +5,8 @@ const util = require('util');
 
 // import model
 const {Inventory} = require('../models/inventory.model');
+const {Warehouse} = require('../models/warehouse.model');
+
 const logger = require('../logger');
 
 // import utility
@@ -208,6 +210,31 @@ exports.deleteInventory = async (req, res) => {
         logger.error(`Unable to delete inventory item:-${error.message}`)
         return res.status(500).json({
             message: 'Unable to delete inventory item',
+            error: error
+        })
+    }
+}
+
+
+// ********************ADD INVENTORY TO A WAREHOUSE******************************
+exports.addInventoryToWarehouse = async (req, res) => {
+    try {
+        const {inventory_id, warehouse_id} = req.params;
+
+        await Warehouse.findByIdAndUpdate(warehouse_id, {
+            $push: {inventory: inventory_id}
+        }).exec()
+
+        await Inventory.findByIdAndUpdate(inventory_id, {
+            $push: {warehouse: warehouse_id}
+        }).exec()
+
+        return res.status(204).send("Inventory added to Warehouse successfully")
+
+    } catch (error) {
+        logger.error(`Unable to add inventory to warehouse:-${error.message}`)
+        return res.status(500).json({
+            message: "Unable to add inventory to warehouse",
             error: error
         })
     }
